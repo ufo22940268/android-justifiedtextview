@@ -12,34 +12,36 @@ import java.util.regex.Pattern;
 /**
  * Created by ccheng on 3/18/14.
  */
-public class MyText extends View {
+public class JustifyTextView extends View {
 
-    public static final int MAX_WIDTH = 200;
+    public static final int MAX_WIDTH = 400;
     public static final int FONT_SIZE = 20;
-    public static final int EN_FONT_SIZE = 11;
     public static final int LARGEST_FONT_SIZE = FONT_SIZE;
     private final Paint p;
 
-    public MyText(Context context, AttributeSet attrs) {
+    private String mArticalText = "";
+
+    public JustifyTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         p = new Paint();
         p.setColor(Color.RED);
         p.setTextSize(FONT_SIZE);
-
-        int w = (int) p.measureText("A");
-        System.out.println("en_w = " + w);
-        w = (int) p.measureText("想");
-        System.out.println("cn_w = " + w);
     }
-    
+
+    public String getText() {
+        return mArticalText;
+    }
+
+    public void setText(String articalText) {
+        mArticalText = articalText;
+    }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.translate(0, 30);
 
-        String sampleText = getResources().getString(R.string.cn_book_artical);
-        String leftText = sampleText;
+        String leftText = mArticalText;
 
         while ((leftText = drawOneLine(canvas, leftText)).length() != 0) {
 //            System.out.println("leftText = " + leftText);
@@ -47,14 +49,21 @@ public class MyText extends View {
     }
 
     private String drawOneLine(Canvas canvas, String text) {
-        p.setTextScaleX(1);
-
         int minimumCount = MAX_WIDTH/LARGEST_FONT_SIZE;
 
         String leftString;
         if (text.length() < minimumCount) {
+            System.out.println("JustifyTextView.drawOneLine");
+            String s = text;
+            if (text.contains("\n")) {
+                int p = text.indexOf("\n");
+                s = text.substring(0, p);
+                leftString = text.substring(p + 1, text.length());
+            } else {
+                leftString = "";
+            }
+
             drawString(canvas, text, false);
-            leftString = "";
         } else {
             int count = minimumCount;
             while (p.measureText(text.substring(0, count)) < MAX_WIDTH && count < text.length()) {
@@ -65,8 +74,21 @@ public class MyText extends View {
             int width = (int) p.measureText(text.substring(0, count));
             System.out.println("width = " + width);
 
-            drawString(canvas, text.substring(0, count), true);
-            leftString = text.substring(count, text.length());
+            //Detect if string contains new line sign, if it contains, then
+            //break string return the rest to caller.
+            String s = text.substring(0, count);
+            boolean needSpacing = false;
+            if (s.contains("\n")) {
+                int p = s.indexOf("\n");
+                s = s.substring(0, p);
+                leftString = text.substring(p + 1, text.length());
+                needSpacing = false;
+            } else {
+                leftString = text.substring(count, text.length());
+                needSpacing = true;
+            }
+
+            drawString(canvas, s, needSpacing);
         }
 
         canvas.translate(0, FONT_SIZE);
@@ -96,24 +118,6 @@ public class MyText extends View {
         return p.measureText(String.valueOf(c));
     }
 
-    private void evalScale(String text, float d) {
-        int enCount = getEnCount(text);
-        int cnCount = text.length() - enCount;
-        float scale = d/(enCount*EN_FONT_SIZE + cnCount*FONT_SIZE);
-        System.out.println("scale = " + scale);
-        p.setTextScaleX(1 + scale);
-    }
-
-    private int getEnCount(String text) {
-        int count = 0;
-        for (int i = 0; i < text.length(); i++) {
-            char c = text.charAt(i);
-            if (isLetter(String.valueOf(c))) {
-                count += 1;
-            }
-        }
-        return count;
-    }
 
     private boolean isLetter(String s) {
         Pattern p = Pattern.compile("[a-zA-Z0-9]");

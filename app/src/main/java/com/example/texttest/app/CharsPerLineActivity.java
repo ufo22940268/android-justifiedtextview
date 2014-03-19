@@ -19,18 +19,36 @@ package com.example.texttest.app;
 import android.app.Activity;
 import android.os.Bundle;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class CharsPerLineActivity extends Activity {
     private static final String TAG = "CharsPerLineActivity";
     @InjectView(R.id.text)
-    MyText mText;
+    JustifyTextView mText;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.another_activity_main);
         ButterKnife.inject(this);
+
+        String text = "";
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(getAssets().open("1.txt")));
+            String line;
+            StringBuffer sb = new StringBuffer();
+            while ((line = br.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+            text = sb.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mText.setText(text);
     }
 
 }

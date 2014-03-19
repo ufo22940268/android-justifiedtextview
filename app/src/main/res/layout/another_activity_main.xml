@@ -18,12 +18,11 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent">
 
-    <com.example.texttest.app.MyText
+    <com.example.texttest.app.JustifyTextView
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="@string/book_artical"
         android:textSize="18sp"
         android:lineSpacingMultiplier="1.1"
         />

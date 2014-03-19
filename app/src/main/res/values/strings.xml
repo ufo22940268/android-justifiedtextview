@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">texttest</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="book_artical">Tests whether this string matches the given regularExpression. This method returns true only if the regular expression matches the entire input string. A common mistake is to assume that this method behaves like contains(CharSequence); if you want to match anywhere within the input string, you need to add .* to the beginning and end of your regular expression. See matches(String, CharSequence).</string>
+
+    <string name="cn_book_artical">预览版目前已经包括Android Wear最新API，这些新API可以让开发者以语音的方式定制和扩展他们的通知。其提供的仿真器可用于预览包括方形和圆形可穿戴设备上出现的通知方式，与此同时，谷歌也希望在未来几个月内继续为Android Wear设备提供新的API和功能。</string>
+
+
+</resources>

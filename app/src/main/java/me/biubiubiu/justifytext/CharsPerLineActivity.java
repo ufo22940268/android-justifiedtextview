@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.texttest.app;
+package me.biubiubiu.justifytext;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class CharsPerLineActivity extends Activity {
+
     private static final String TAG = "CharsPerLineActivity";
     @InjectView(R.id.text)
     JustifyTextView mText;
@@ -48,7 +49,9 @@ public class CharsPerLineActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         mText.setText(text);
+        mText.setLineSpacing(20, 1);
     }
 
 }

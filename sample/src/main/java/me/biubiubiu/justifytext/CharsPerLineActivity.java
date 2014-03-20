@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import me.biubiubiu.justifytext.library.JustifyTextView;
 
 public class CharsPerLineActivity extends Activity {
 

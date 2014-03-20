@@ -1,4 +1,4 @@
-package me.biubiubiu.justifytext;
+package me.biubiubiu.justifytext.library;
 
 import android.content.Context;
 import android.graphics.Canvas;

@@ -18,7 +18,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent">
 
-    <me.biubiubiu.justifytext.JustifyTextView
+    <me.biubiubiu.justifytext.library.JustifyTextView
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

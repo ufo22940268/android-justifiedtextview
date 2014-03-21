@@ -20,18 +20,19 @@ public class JustifyTextView extends View {
     Unit is px.
      */
     public static int mTextSize = 20;
-    public static final int LARGEST_FONT_SIZE = mTextSize;
     private final Paint p;
 
     private String mArticalText = "";
     private float mSpacingAdd;
     private float mSpacingMulti = 1;
+    private int mTextColor = android.R.color.secondary_text_dark;
 
     public JustifyTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         p = new Paint();
-        p.setColor(Color.RED);
+        p.setColor(getContext().getResources().getColor(mTextColor));
         p.setTextSize(mTextSize);
+        p.setAntiAlias(true);
     }
 
     public String getText() {
@@ -40,6 +41,7 @@ public class JustifyTextView extends View {
 
     public void setText(String articalText) {
         mArticalText = articalText;
+        invalidate();
     }
 
     @Override
@@ -61,7 +63,7 @@ public class JustifyTextView extends View {
     }
 
     private String drawOneLine(Canvas canvas, String text) {
-        int minimumCount = mViewWidth /LARGEST_FONT_SIZE;
+        int minimumCount = mViewWidth/mTextSize;
 
         String leftString;
         if (text.length() < minimumCount) {
@@ -188,10 +190,17 @@ public class JustifyTextView extends View {
 
     public void setTextSize(int flag, int size) {
         setTextSizeInPx(size);
+        invalidate();
     }
 
     public void setLineSpacing(float add, float multi) {
         mSpacingAdd = add;
         mSpacingMulti = multi;
+    }
+
+    public void setTextColor(int color) {
+        mTextColor = color;
+//        p.setColor(getContext().getResources().getColor(mTextColor));
+        p.setColor(color);
     }
 }

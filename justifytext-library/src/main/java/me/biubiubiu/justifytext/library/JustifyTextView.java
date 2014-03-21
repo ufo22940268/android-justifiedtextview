@@ -19,7 +19,8 @@ public class JustifyTextView extends View {
     /*
     Unit is px.
      */
-    public static int mTextSize = 20;
+    //TODO Text size will displays strange when scroll back to previous page.
+    public static int mTextSize = 35;
     private final Paint p;
 
     private String mArticalText = "";
@@ -48,6 +49,7 @@ public class JustifyTextView extends View {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         mViewWidth = getMeasuredWidth();
+        mViewWidth -= mTextSize/2;
     }
 
     @Override
@@ -144,8 +146,7 @@ public class JustifyTextView extends View {
                 float dx = getCharWidth(c) + spacing;
                 canvas.translate(dx, 0);
             } else {
-                //TODO
-                canvas.translate(mTextSize /2 + 3, 0);
+                canvas.translate(mTextSize/2 + 3, 0);
             }
         }
 
@@ -200,7 +201,6 @@ public class JustifyTextView extends View {
 
     public void setTextColor(int color) {
         mTextColor = color;
-//        p.setColor(getContext().getResources().getColor(mTextColor));
         p.setColor(color);
     }
 }

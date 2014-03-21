@@ -4,3 +4,5 @@
 .DS_Store
 **/*.iml
 .idea
+/sample/sample.apk
+/.idea/misc.xml

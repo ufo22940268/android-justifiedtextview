@@ -26,7 +26,7 @@ public class JustifyTextView extends View {
     private String mArticalText = "";
     private float mSpacingAdd;
     private float mSpacingMulti = 1;
-    private int mTextColor = android.R.color.secondary_text_dark;
+    private int mTextColor = android.R.color.primary_text_light;
 
     public JustifyTextView(Context context, AttributeSet attrs) {
         super(context, attrs);

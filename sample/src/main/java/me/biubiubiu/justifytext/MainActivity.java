@@ -16,7 +16,9 @@
 
 package me.biubiubiu.justifytext;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import java.io.BufferedReader;
@@ -27,16 +29,21 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import me.biubiubiu.justifytext.library.JustifyTextView;
 
-public class CharsPerLineActivity extends Activity {
+public class MainActivity extends Activity {
 
     private static final String TAG = "CharsPerLineActivity";
+
     @InjectView(R.id.text)
     JustifyTextView mText;
 
+    @SuppressLint("ResourceAsColor")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.another_activity_main);
+
         ButterKnife.inject(this);
+        mText.setTextSize(35);
+        mText.setTextColor(android.R.color.holo_red_dark);
 
         String text = "";
         try {

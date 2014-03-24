@@ -31,9 +31,6 @@ public class JustifyTextView extends View {
     public JustifyTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         p = new Paint();
-        p.setColor(getContext().getResources().getColor(mTextColor));
-        p.setTextSize(mTextSize);
-        p.setAntiAlias(true);
     }
 
     public String getText() {
@@ -55,6 +52,9 @@ public class JustifyTextView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        p.setColor(getContext().getResources().getColor(mTextColor));
+        p.setAntiAlias(true);
+        p.setTextSize(mTextSize);
         canvas.translate(0, 30);
 
         String leftText = mArticalText;
@@ -194,6 +194,10 @@ public class JustifyTextView extends View {
         invalidate();
     }
 
+    public void setTextSize(int size) {
+        setTextSize(0, size);
+    }
+
     public void setLineSpacing(float add, float multi) {
         mSpacingAdd = add;
         mSpacingMulti = multi;
@@ -202,5 +206,6 @@ public class JustifyTextView extends View {
     public void setTextColor(int color) {
         mTextColor = color;
         p.setColor(color);
+        invalidate();
     }
 }

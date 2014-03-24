@@ -19,7 +19,6 @@ public class JustifyTextView extends View {
     /*
     Unit is px.
      */
-    //TODO Text size will displays strange when scroll back to previous page.
     public static int mTextSize = 35;
     private final Paint p;
 
@@ -52,9 +51,11 @@ public class JustifyTextView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        p.setColor(getContext().getResources().getColor(mTextColor));
+
+        p.setColor(mTextColor);
         p.setAntiAlias(true);
         p.setTextSize(mTextSize);
+
         canvas.translate(0, 30);
 
         String leftText = mArticalText;
@@ -205,7 +206,6 @@ public class JustifyTextView extends View {
 
     public void setTextColor(int color) {
         mTextColor = color;
-        p.setColor(color);
         invalidate();
     }
 }

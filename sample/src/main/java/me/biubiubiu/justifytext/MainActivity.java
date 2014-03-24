@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
 
         ButterKnife.inject(this);
         mText.setTextSize(35);
-        mText.setTextColor(android.R.color.holo_red_dark);
+        mText.setTextColor(0xff000000);
 
         String text = "";
         try {

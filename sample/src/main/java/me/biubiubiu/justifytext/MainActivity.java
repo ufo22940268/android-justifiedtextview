@@ -42,7 +42,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.another_activity_main);
 
         ButterKnife.inject(this);
-        mText.setTextColor(0xff000000);
+        mText.setTextColor(0xffff0000);
 
         String text = "";
         try {

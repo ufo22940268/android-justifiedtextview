@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Build;
+import android.text.Layout;
 import android.text.StaticLayout;
 import android.util.AttributeSet;
 import android.widget.TextView;
@@ -13,7 +14,7 @@ import android.widget.TextView;
  */
 public class JustifyTextView extends TextView {
 
-    private StaticLayout mLayout;
+    private Layout mLayout;
     private int mLineY;
     private int mViewWidth;
 
@@ -24,31 +25,31 @@ public class JustifyTextView extends TextView {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        mViewWidth = getMeasuredWidth();
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onDraw(Canvas canvas) {
+        Canvas fakeCanvas = new Canvas();
+        super.onDraw(fakeCanvas);
+        mViewWidth = getMeasuredWidth();
         String text = (String) getText();
-        System.out.println("mViewWidth = " + mViewWidth);
+        mLineY = 0;
         mLineY += getTextSize();
-        mLayout = (StaticLayout) getLayout();
+        mLayout =  getLayout();
         for (int i = 0; i < mLayout.getLineCount(); i++) {
             int lineStart = mLayout.getLineStart(i);
             int lineEnd = mLayout.getLineEnd(i);
             String line = text.substring(lineStart, lineEnd);
 
             float width = StaticLayout.getDesiredWidth(text, lineStart, lineEnd, getPaint());
-            System.out.println("line = " + line);
-            System.out.println("width = " + width);
-            if (needScale(width)) {
+            if (needScale(line)) {
                 drawScaledText(canvas, line, width);
             } else {
                 canvas.drawText(line, 0, mLineY, getPaint());
             }
 
-            mLineY += getTextSize() * getLineSpacingMultiplier() + getLineSpacingExtra();
+            mLineY += getLineHeight();
         }
     }
 
@@ -63,7 +64,11 @@ public class JustifyTextView extends TextView {
         }
     }
 
-    private boolean needScale(float width) {
-        return (mViewWidth - width) < mViewWidth*0.3;
+    private boolean needScale(String width) {
+        if (width.length() == 0) {
+            return false;
+        } else {
+            return width.charAt(width.length() - 1) != '\n';
+        }
     }
 }

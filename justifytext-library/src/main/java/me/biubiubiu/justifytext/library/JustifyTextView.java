@@ -31,6 +31,7 @@ public class JustifyTextView extends TextView {
     @Override
     protected void onDraw(Canvas canvas) {
         String text = (String) getText();
+        System.out.println("mViewWidth = " + mViewWidth);
         mLineY += getTextSize();
         mLayout = (StaticLayout) getLayout();
         for (int i = 0; i < mLayout.getLineCount(); i++) {
@@ -39,9 +40,8 @@ public class JustifyTextView extends TextView {
             String line = text.substring(lineStart, lineEnd);
 
             float width = StaticLayout.getDesiredWidth(text, lineStart, lineEnd, getPaint());
-//            System.out.println("line = " + line);
-//            System.out.println("width = " + width);
-//            System.out.println("getLineRight = " + mLayout.getLineRight(i));
+            System.out.println("line = " + line);
+            System.out.println("width = " + width);
             if (needScale(width)) {
                 drawScaledText(canvas, line, width);
             } else {
@@ -56,8 +56,10 @@ public class JustifyTextView extends TextView {
         float d = (mViewWidth - lineWidth)/line.length();
         float x = 0;
         for (int i = 0; i < line.length(); i++) {
-            canvas.drawText(String.valueOf(line.charAt(i)), x, mLineY, getPaint());
-            x += getTextSize() + d;
+            String c = String.valueOf(line.charAt(i));
+            float cw = StaticLayout.getDesiredWidth(c, getPaint());
+            canvas.drawText(c, x, mLineY, getPaint());
+            x += cw + d;
         }
     }
 

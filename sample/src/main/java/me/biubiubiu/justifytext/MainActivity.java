@@ -16,37 +16,29 @@
 
 package me.biubiubiu.justifytext;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 import me.biubiubiu.justifytext.library.JustifyTextView;
 
 public class MainActivity extends Activity {
 
-    private static final String TAG = "CharsPerLineActivity";
+    private JustifyTextView mText;
 
-    @InjectView(R.id.text)
-    JustifyTextView mText;
-
-    @SuppressLint("ResourceAsColor")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.another_activity_main);
 
-        ButterKnife.inject(this);
-        mText.setTextColor(0xffff0000);
-
+        mText = (JustifyTextView) findViewById(R.id.text);
         String text = "";
+
+        BufferedReader br = null;
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(getAssets().open("1.txt")));
+            br = new BufferedReader(new InputStreamReader(getAssets().open("1.txt")));
             String line;
             StringBuffer sb = new StringBuffer();
             while ((line = br.readLine()) != null) {
@@ -55,10 +47,15 @@ public class MainActivity extends Activity {
             text = sb.toString();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         mText.setText(text);
-        mText.setLineSpacing(20, 1);
     }
 
 }

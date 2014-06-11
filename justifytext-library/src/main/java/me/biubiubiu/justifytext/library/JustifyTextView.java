@@ -1,11 +1,10 @@
 package me.biubiubiu.justifytext.library;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.os.Build;
 import android.text.Layout;
 import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -14,7 +13,6 @@ import android.widget.TextView;
  */
 public class JustifyTextView extends TextView {
 
-    private Layout mLayout;
     private int mLineY;
     private int mViewWidth;
 
@@ -29,23 +27,24 @@ public class JustifyTextView extends TextView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Canvas fakeCanvas = new Canvas();
-        super.onDraw(fakeCanvas);
+        TextPaint paint = getPaint();
+        paint.setColor(getCurrentTextColor());
+        paint.drawableState = getDrawableState();
         mViewWidth = getMeasuredWidth();
         String text = (String) getText();
         mLineY = 0;
         mLineY += getTextSize();
-        mLayout =  getLayout();
-        for (int i = 0; i < mLayout.getLineCount(); i++) {
-            int lineStart = mLayout.getLineStart(i);
-            int lineEnd = mLayout.getLineEnd(i);
+        Layout layout = getLayout();
+        for (int i = 0; i < layout.getLineCount(); i++) {
+            int lineStart = layout.getLineStart(i);
+            int lineEnd = layout.getLineEnd(i);
             String line = text.substring(lineStart, lineEnd);
 
             float width = StaticLayout.getDesiredWidth(text, lineStart, lineEnd, getPaint());
             if (needScale(line)) {
                 drawScaledText(canvas, lineStart, line, width);
             } else {
-                canvas.drawText(line, 0, mLineY, getPaint());
+                canvas.drawText(line, 0, mLineY, paint);
             }
 
             mLineY += getLineHeight();
@@ -63,8 +62,7 @@ public class JustifyTextView extends TextView {
             line = line.substring(3);
         }
 
-        float d = (mViewWidth - lineWidth) / line.length();
-
+        float d = (mViewWidth - lineWidth) / line.length() - 1;
         for (int i = 0; i < line.length(); i++) {
             String c = String.valueOf(line.charAt(i));
             float cw = StaticLayout.getDesiredWidth(c, getPaint());
@@ -77,11 +75,12 @@ public class JustifyTextView extends TextView {
         return line.length() > 3 && line.charAt(0) == ' ' && line.charAt(1) == ' ';
     }
 
-    private boolean needScale(String width) {
-        if (width.length() == 0) {
+    private boolean needScale(String line) {
+        if (line.length() == 0) {
             return false;
         } else {
-            return width.charAt(width.length() - 1) != '\n';
+            return line.charAt(line.length() - 1) != '\n';
         }
     }
+
 }

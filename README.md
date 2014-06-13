@@ -3,7 +3,7 @@
 
 Implement justified textview base on the native TextView. Let text displays fill the screen width without extra blanks in the end of line. 
 
-![截了个图](./screenshot.png)
+![截了个图](./screenshot2.png)
 
 ##Usage
 

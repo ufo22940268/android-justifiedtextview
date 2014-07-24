@@ -1,9 +1,13 @@
 
 #JustifiedTextView
 
-Implement justified textview base on the native TextView. Let text displays fill the screen width without extra blanks in the end of line. 
+Implement justified textview base on the native TextView. Let text displays fill the screen width without extra blanks in the end of line.
 
-![截了个图](./screenshot2.png)
+###English
+![截了个图](./en.png)
+
+###Chinese
+![截了个图](./zh.png)
 
 ##Usage
 

@@ -9,6 +9,9 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+import java.lang.Character;
+import java.lang.String;
+
 /**
  * @author ccheng
  * @Date 3/18/14
@@ -74,7 +77,6 @@ public class JustifyTextView extends TextView {
             line = line.substring(3);
         }
 
-        int gapCount = line.length() - 1;
         int i = 0;
         if (line.length() > 2 && line.charAt(0) == 12288 && line.charAt(1) == 12288) {
             String substring = line.substring(0, 2);
@@ -84,12 +86,29 @@ public class JustifyTextView extends TextView {
             i += 2;
         }
 
-        float d = (mViewWidth - lineWidth) / gapCount;
+        int j = i;
+        int longCharCount = 0;
         for (; i < line.length(); i++) {
-            String c = String.valueOf(line.charAt(i));
-            float cw = StaticLayout.getDesiredWidth(c, getPaint());
-            canvas.drawText(c, x, mLineY, getPaint());
-            x += cw + d;
+            if(i + 1 < line.length() && Character.isSurrogatePair(line.charAt(i), line.charAt(i + 1))) {
+                longCharCount++;
+            }
+        }
+        int gapCount = line.length() - 1 - longCharCount;
+
+        float d = (mViewWidth - lineWidth) / gapCount;
+        for (; j < line.length(); j++) {
+            if (j + 1 < line.length() && Character.isSurrogatePair(line.charAt(j), line.charAt(j + 1))) {
+                String c = new String(new char[]{line.charAt(j), line.charAt(j + 1)});
+                float cw = StaticLayout.getDesiredWidth(c, getPaint());
+                canvas.drawText(c, x, mLineY, getPaint());
+                x += cw + d;
+                j++;
+            } else {
+                String c = String.valueOf(line.charAt(j));
+                float cw = StaticLayout.getDesiredWidth(c, getPaint());
+                canvas.drawText(c, x, mLineY, getPaint());
+                x += cw + d;
+            }
         }
     }
 

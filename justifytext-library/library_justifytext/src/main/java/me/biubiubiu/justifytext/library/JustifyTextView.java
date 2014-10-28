@@ -38,6 +38,7 @@ public class JustifyTextView extends TextView {
         paint.drawableState = getDrawableState();
         mViewWidth = getMeasuredWidth();
         String text = getText().toString();
+
         mLineY = 0;
         mLineY += getTextSize();
         Layout layout = getLayout();
@@ -57,7 +58,7 @@ public class JustifyTextView extends TextView {
             int lineEnd = layout.getLineEnd(i);
             float width = StaticLayout.getDesiredWidth(text, lineStart, lineEnd, getPaint());
             String line = text.substring(lineStart, lineEnd);
-            if (needScale(line)) {
+            if (needScale(line) && i < layout.getLineCount() - 1) {
                 drawScaledText(canvas, lineStart, line, width);
             } else {
                 canvas.drawText(line, 0, mLineY, paint);
@@ -67,38 +68,42 @@ public class JustifyTextView extends TextView {
     }
 
     private void drawScaledText(Canvas canvas, int lineStart, String line, float lineWidth) {
+
         float x = 0;
-        if (isFirstLineOfParagraph(lineStart, line)) {
-            String blanks = "  ";
-            canvas.drawText(blanks, x, mLineY, getPaint());
-            float bw = StaticLayout.getDesiredWidth(blanks, getPaint());
-            x += bw;
 
-            line = line.substring(3);
+        // draw blank without justify
+        int offset = 0;
+        for (; offset < line.length(); offset++) {
+            char c = line.charAt(offset);
+            if( c==32 || c==12288) {
+                String blank = String.valueOf(c);
+                canvas.drawText(blank, x, mLineY, getPaint());
+                float bw = StaticLayout.getDesiredWidth(blank, getPaint());
+                x += bw;
+                offset++;
+            } else {
+                break;
+            }
         }
 
-        int i = 0;
-        if (line.length() > 2 && line.charAt(0) == 12288 && line.charAt(1) == 12288) {
-            String substring = line.substring(0, 2);
-            float cw = StaticLayout.getDesiredWidth(substring, getPaint());
-            canvas.drawText(substring, x, mLineY, getPaint());
-            x += cw;
-            i += 2;
+        if(offset == line.length()){
+            return;
         }
+        line = line.substring(offset);
 
-        int j = i;
+        // count of surrogate pair
         int longCharCount = 0;
-        for (; i < line.length(); i++) {
+        for(int i= 0; i < line.length(); i++) {
             if(i + 1 < line.length() && Character.isSurrogatePair(line.charAt(i), line.charAt(i + 1))) {
                 longCharCount++;
             }
         }
-        int gapCount = line.length() - 1 - longCharCount;
 
+        int gapCount = line.length() - 1 - longCharCount;
         float d = (mViewWidth - lineWidth) / gapCount;
-        for (; j < line.length(); j++) {
-            if (j + 1 < line.length() && Character.isSurrogatePair(line.charAt(j), line.charAt(j + 1))) {
-                String c = new String(new char[]{line.charAt(j), line.charAt(j + 1)});
+        for (int j=0; j < line.length(); j++){
+            if(j + 1 < line.length() && Character.isSurrogatePair(line.charAt(j), line.charAt(j + 1))) {
+                String c = new String(new char[] { line.charAt(j), line.charAt(j + 1) });
                 float cw = StaticLayout.getDesiredWidth(c, getPaint());
                 canvas.drawText(c, x, mLineY, getPaint());
                 x += cw + d;
@@ -123,5 +128,3 @@ public class JustifyTextView extends TextView {
             return line.charAt(line.length() - 1) != '\n';
         }
     }
-
-}

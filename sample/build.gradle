@@ -1,4 +1,4 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 19
@@ -10,15 +10,6 @@ android {
         versionCode 1
         versionName "1.0"
     }
-
-    /*signingConfigs {*/
-        /*release {*/
-            /*storeFile file("/Applications/Android Studio.app/bin/me-biubiubiu")*/
-            /*storePassword "12345678"*/
-            /*keyAlias "me-biubiubiu-alias"*/
-            /*keyPassword "12345678"*/
-        /*}*/
-    /*}*/
 
     lintOptions {
         checkReleaseBuilds false

@@ -21,5 +21,3 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
-
-apply from: 'https://raw.githubusercontent.com/daimajia/AndroidImageSlider/master/library/gradle-mvn-push.gradle'

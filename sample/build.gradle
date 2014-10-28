@@ -1,4 +1,19 @@
-apply plugin: 'com.android.application'
+// returns true if greater, null if equal, false otherwise
+def gradleAfter = {
+    [
+            gradle.gradleVersion.tokenize('.')*.toInteger(),
+            it.toString().tokenize('.')*.toInteger()
+    ].transpose().inject(null){ result, item ->
+        result != null ?:
+                (item[0] > item[1] ?: item[0] == item[1] ? null : false);
+    }
+}
+
+if (gradleAfter(1.11)) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'android'
+}
 
 android {
     compileSdkVersion 19
@@ -11,18 +26,20 @@ android {
         versionName "1.0"
     }
 
-    lintOptions {
-        checkReleaseBuilds false
-        // Or, if you prefer, you can continue to check for errors in release builds,
-        // but continue the build even when errors are found:
-        abortOnError false
-    }
+    if(gradleAfter(1.8)){
+        lintOptions {
+            checkReleaseBuilds false
+            // Or, if you prefer, you can continue to check for errors in release builds,
+            // but continue the build even when errors are found:
+            abortOnError false
+        }
 
-    buildTypes {
-        release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            /*signingConfig signingConfigs.release*/
+        buildTypes {
+            release {
+                runProguard false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+                /*signingConfig signingConfigs.release*/
+            }
         }
     }
 }

@@ -1,4 +1,19 @@
-apply plugin: 'android-library'
+// returns true if greater, null if equal, false otherwise
+def gradleAfter = {
+    [
+            gradle.gradleVersion.tokenize('.')*.toInteger(),
+            it.toString().tokenize('.')*.toInteger()
+    ].transpose().inject(null){ result, item ->
+        result != null ?:
+                (item[0] > item[1] ?: item[0] == item[1] ? null : false);
+    }
+}
+
+if (gradleAfter(1.11)) {
+    apply plugin: 'com.android.library'
+} else {
+    apply plugin: 'android-library'
+}
 
 android {
     compileSdkVersion 19
@@ -10,10 +25,21 @@ android {
         versionCode 1
         versionName "1.0"
     }
-    buildTypes {
-        release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+
+    if (gradleAfter(1.8)) {
+        useOldManifestMerger true
+        lintOptions {
+            abortOnError false
+            checkReleaseBuilds false
+        }
+
+        // Method buildTypes() doesn't exist in the earlier gradle version
+        // when dealing with android-library
+        buildTypes {
+            release {
+                runProguard false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            }
         }
     }
 }
@@ -21,5 +47,3 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
-
-apply from: 'https://raw.githubusercontent.com/daimajia/AndroidImageSlider/master/library/gradle-mvn-push.gradle'

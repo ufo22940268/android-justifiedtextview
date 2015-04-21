@@ -40,6 +40,10 @@ public class TextActivity extends Activity {
         mJustifiedText = (TextView)findViewById(R.id.justified_text);
         String text = "";
 
+        if (!getIntent().hasExtra(KEY_FILE_NAME)) {
+            getIntent().putExtra(KEY_FILE_NAME, "test2.txt");
+        }
+
         BufferedReader br = null;
         try {
             String fileName = getIntent().getStringExtra(KEY_FILE_NAME);

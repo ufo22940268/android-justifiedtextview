@@ -48,3 +48,6 @@ Then add put this into layout file.
 - **1.1** Display ok when using custom font.
 
 
+----------------------------------
+
+MIT License

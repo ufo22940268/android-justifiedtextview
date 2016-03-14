@@ -24,7 +24,7 @@ If you use maven, add this to pom.xml.
       <type>aar</type>
     </dependency>
 
-Then add put this into layout file.
+Then add this into layout file.
 
 ```xml
     <me.biubiubiu.justifytext.library.JustifyTextView
@@ -34,13 +34,13 @@ Then add put this into layout file.
         />
 ```
 
-##demo
+##Demo
 
-[directly download](http://pan.baidu.com/s/1bnq2rk7)
+[Directly download](http://pan.baidu.com/s/1bnq2rk7)
 
 <a href="https://play.google.com/store/apps/details?id=me.biubiubiu.justifytext">
-  <img alt="Get it on Google Play"
-       src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
+  <img alt="Get it on Google Play" width="150"
+       src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" />
 </a>
 
 ##Change list

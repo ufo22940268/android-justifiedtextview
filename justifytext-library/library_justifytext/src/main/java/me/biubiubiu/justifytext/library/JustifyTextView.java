@@ -33,9 +33,9 @@ public class JustifyTextView extends TextView {
         TextPaint paint = getPaint();
         paint.setColor(getCurrentTextColor());
         paint.drawableState = getDrawableState();
-        mViewWidth = getMeasuredWidth();
+        mViewWidth = getMeasuredWidth() - (getPaddingLeft() + getPaddingRight());
         String text = getText().toString();
-        mLineY = 0;
+        mLineY = getPaddingTop();
         mLineY += getTextSize();
         Layout layout = getLayout();
 
@@ -57,14 +57,15 @@ public class JustifyTextView extends TextView {
             if (needScale(line)) {
                 drawScaledText(canvas, lineStart, line, width);
             } else {
-                canvas.drawText(line, 0, mLineY, paint);
+                canvas.drawText(line, getPaddingLeft(), mLineY, paint);
             }
             mLineY += textHeight;
         }
+        mLineY += getPaddingBottom();
     }
 
     private void drawScaledText(Canvas canvas, int lineStart, String line, float lineWidth) {
-        float x = 0;
+        float x = getPaddingLeft();
         if (isFirstLineOfParagraph(lineStart, line)) {
             String blanks = "  ";
             canvas.drawText(blanks, x, mLineY, getPaint());

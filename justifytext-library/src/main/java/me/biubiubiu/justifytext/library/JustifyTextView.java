@@ -33,7 +33,7 @@ public class JustifyTextView extends TextView {
         mViewWidth = getMeasuredWidth();
         String text = (String) getText();
         mLineY = 0;
-        mLineY += getTextSize();
+        mLineY += getTextSize() * 1.5;
         Layout layout = getLayout();
         for (int i = 0; i < layout.getLineCount(); i++) {
             int lineStart = layout.getLineStart(i);

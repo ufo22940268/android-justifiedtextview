@@ -1,12 +1,12 @@
 
-#JustifiedTextView
+# JustifiedTextView
 
 Implement justified textview base on the native TextView. Let text displays fill the screen width without extra blanks in the end of line.
 
-###English
+### English
 ![截了个图](./en.png)
 
-###Chinese
+### Chinese
 ![截了个图](./zh.png)
 
 ##Usage
@@ -34,7 +34,7 @@ Then add put this into layout file.
         />
 ```
 
-##demo
+## demo
 
 [directly download](http://pan.baidu.com/s/1bnq2rk7)
 
@@ -43,7 +43,7 @@ Then add put this into layout file.
        src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
 </a>
 
-##Change list
+## Change list
 
 - **1.1** Display ok when using custom font.
 

@@ -9,7 +9,7 @@ Implement justified textview base on the native TextView. Let text displays fill
 ### Chinese
 ![截了个图](./zh.png)
 
-##Usage
+## Usage
 
 You can import in build.gradle like this
 

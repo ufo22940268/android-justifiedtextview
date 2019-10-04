@@ -1,10 +1,6 @@
 
 # JustifiedTextView
 
-Fork for solving some issues.
-
-## Original documentation:
-
 Implement justified textview base on the native TextView. Let text displays fill the screen width without extra blanks in the end of line.
 
 ### English

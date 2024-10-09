@@ -11,14 +11,14 @@ android {
         versionName "1.0"
     }
 
-    signingConfigs {
-        release {
-            storeFile file("/Applications/Android Studio.app/bin/me-biubiubiu")
-            storePassword "12345678"
-            keyAlias "me-biubiubiu-alias"
-            keyPassword "12345678"
-        }
-    }
+    /*signingConfigs {*/
+        /*release {*/
+            /*storeFile file("/Applications/Android Studio.app/bin/me-biubiubiu")*/
+            /*storePassword "12345678"*/
+            /*keyAlias "me-biubiubiu-alias"*/
+            /*keyPassword "12345678"*/
+        /*}*/
+    /*}*/
 
     lintOptions {
         checkReleaseBuilds false
@@ -31,7 +31,7 @@ android {
         release {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            signingConfig signingConfigs.release
+            /*signingConfig signingConfigs.release*/
         }
     }
 }

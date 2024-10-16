@@ -9,14 +9,14 @@ Implement justified textview base on the native TextView. Let text displays fill
 
 You can import in build.gradle like this
 
-    compile 'me.biubiubiu.justifytext:library:1.0.0'
+    compile 'me.biubiubiu.justifytext:library:1.1'
 
 If you use maven, add this to pom.xml.
 
     <dependency>
       <groupId>me.biubiubiu.justifytext</groupId>
       <artifactId>library</artifactId>
-      <version>1.0.0</version>
+      <version>1.1</version>
       <type>aar</type>
     </dependency>
 
@@ -36,5 +36,9 @@ Then add put this into layout file.
   <img alt="Get it on Google Play"
        src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
 </a>
+
+##Change list
+
+- **1.1** Display ok when using custom font.
 
 

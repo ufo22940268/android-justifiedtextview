@@ -37,7 +37,7 @@ android {
 }
 
 dependencies {
+    compile 'me.biubiubiu.justifytext:library:1.1'
     compile 'com.android.support:appcompat-v7:+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':justifytext-library')
 }

@@ -17,7 +17,9 @@
 package me.biubiubiu.justifytext;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -57,5 +59,4 @@ public class MainActivity extends Activity {
 
         mText.setText(text);
     }
-
 }

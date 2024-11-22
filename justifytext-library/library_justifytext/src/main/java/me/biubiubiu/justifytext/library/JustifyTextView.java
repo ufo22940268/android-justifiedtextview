@@ -54,7 +54,7 @@ public class JustifyTextView extends TextView {
             int lineEnd = layout.getLineEnd(i);
             float width = StaticLayout.getDesiredWidth(text, lineStart, lineEnd, getPaint());
             String line = text.substring(lineStart, lineEnd);
-            if (needScale(line)) {
+            if (needScale(line) && i < layout.getLineCount() -1) {
                 drawScaledText(canvas, lineStart, line, width);
             } else {
                 canvas.drawText(line, 0, mLineY, paint);
